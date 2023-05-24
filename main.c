@@ -1,15 +1,15 @@
 #include "shell.h"
 
 /**
- * main - this is the entry point
+ * main - this function is the entry point
  * @ac: para count
  * @av: para vector
  *
- * Return: 0 on true, 1 on failure
+ * Return: 0 on true, 1 on false
  */
 int main(int ac, char **av)
 {
-info_t info[] = { INFO_INIT };
+	info_t info[] = { INFO_INIT };
 	int fd = 2;
 
 	asm ("mov %1, %0\n\t"
