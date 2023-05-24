@@ -12,11 +12,6 @@ int is_cmd(info_t *info, char *path)
 	struct stat st;
 
 	(void)info;
-	if (st.st_mode & S_IFREG)
-	{
-		return (1);
-	}
-	return (0);
 }
 
 /**
