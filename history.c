@@ -1,10 +1,10 @@
 #include "shell.h"
 
 /**
- * get_history_file - gets the history file
- * @info: parameter struct
+ * get_history_file - this function collects the history file
+ * @info: arguement structure
  *
- * Return: allocated string containg history file
+ * Return: str with history file
  */
 
 char *get_history_file(info_t *info)
@@ -25,10 +25,10 @@ char *get_history_file(info_t *info)
 }
 
 /**
- * write_history - creates a file, or appends to an existing file
- * @info: the parameter struct
+ * write_history - this function makes a file
+ * @info: arguement structure
  *
- * Return: 1 on success, else -1
+ * Return: 1 on true, else -1 on false
  */
 int write_history(info_t *info)
 {
@@ -54,14 +54,14 @@ int write_history(info_t *info)
 }
 
 /**
- * read_history - reads history from file
- * @info: the parameter struct
+ * read_history - this function reads history
+ * @info: arguement structure
  *
- * Return: histcount on success, 0 otherwise
+ * Return: history count on true, 0 owise
  */
 int read_history(info_t *info)
 {
-	int i, last = 0, linecount = 0;
+	int j, last = 0, linecount = 0;
 	ssize_t fd, rdlen, fsize = 0;
 	struct stat st;
 	char *buf = NULL, *filename = get_history_file(info);
@@ -85,14 +85,14 @@ int read_history(info_t *info)
 	if (rdlen <= 0)
 		return (free(buf), 0);
 	close(fd);
-	for (i = 0; i < fsize; i++)
-		if (buf[i] == '\n')
+	for (j = 0; j < fsize; j++)
+		if (buf[j] == '\n')
 		{
-			buf[i] = 0;
+			buf[j] = 0;
 			build_history_list(info, buf + last, linecount++);
-			last = i + 1;
+			last = j + 1;
 		}
-	if (last != i)
+	if (last != j)
 		build_history_list(info, buf + last, linecount++);
 	free(buf);
 	info->histcount = linecount;
@@ -103,12 +103,12 @@ int read_history(info_t *info)
 }
 
 /**
- * build_history_list - adds entry to a history linked list
- * @info: Structure containing potential arguments. Used to maintain
+ * build_history_list - this function makes new entry
+ * @info: str with parameters for maintaining
  * @buf: buffer
- * @linecount: the history linecount, histcount
+ * @linecount: linecount
  *
- * Return: Always 0
+ * Return: 0
  */
 int build_history_list(info_t *info, char *buf, int linecount)
 {
@@ -124,20 +124,20 @@ int build_history_list(info_t *info, char *buf, int linecount)
 }
 
 /**
- * renumber_history - renumbers the history linked list after changes
- * @info: Structure containing potential arguments. Used to maintain
+ * renumber_history - this function renumbers the history
+ * @info: str with parameters for maintaining
  *
- * Return: the new histcount
+ * Return: history count
  */
 int renumber_history(info_t *info)
 {
 	list_t *node = info->history;
-	int i = 0;
+	int j = 0;
 
 	while (node)
 	{
-		node->num = i++;
+		node->num = j++;
 		node = node->next;
 	}
-	return (info->histcount = i);
+	return (info->histcount = j);
 }
